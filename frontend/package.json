@@ -1,0 +1,74 @@
+{
+    "name": "it2810-proj-3-frontend",
+    "homepage": "./",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@apollo/client": "^3.4.16",
+        "@craco/craco": "^6.3.0",
+        "@cypress/webpack-preprocessor": "^5.9.1",
+        "@material-tailwind/react": "0.3.4",
+        "@reduxjs/toolkit": "^1.6.2",
+        "@testing-library/jest-dom": "^5.11.4",
+        "@testing-library/react": "^11.1.0",
+        "@testing-library/user-event": "^12.1.10",
+        "@types/graphql": "^14.5.0",
+        "@types/jest": "^26.0.15",
+        "@types/node": "^12.0.0",
+        "@types/react": "^17.0.0",
+        "@types/react-dom": "^17.0.0",
+        "@types/redux-logger": "^3.0.9",
+        "apollo": "^2.33.6",
+        "craco": "^0.0.3",
+        "cypress": "^8.7.0",
+        "depcheck": "^1.4.2",
+        "eslint-config-prettier": "^8.3.0",
+        "graphql": "^15.6.1",
+        "loader-utils": "^3.1.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.5",
+        "react-router-dom": "^5.3.0",
+        "react-scripts": "4.0.3",
+        "redux-logger": "^3.0.6",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.4.4",
+        "webpack": "^5.61.0"
+    },
+    "scripts": {
+        "start": "craco start",
+        "build": "craco build",
+        "test": "craco test",
+        "test:watch": "craco test --watch --notify",
+        "eject": "react-scripts eject",
+        "schema:download": "npx apollo service:download --endpoint=http://localhost:4000/graphql ./src/app/graphql/graphql-schema.json",
+        "schema:generate-watch": "npx apollo codegen:generate --localSchemaFile=./src/app/graphql/graphql-schema.json --target=typescript --tagName=gql --watch",
+        "e2e": "cypress open"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/react-router-dom": "^5.3.1",
+        "autoprefixer": "^9",
+        "jest-junit": "^12.3.0",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+        "tsconfig-paths": "^3.11.0",
+        "tsconfig-paths-webpack-plugin": "^3.5.1"
+    }
+}
