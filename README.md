@@ -126,3 +126,15 @@ Cypress allows for E2E testing where we program how user input should behave and
 There is currently a _layout.spec.ts_ file where it tests for layout. And a _action.spec.ts_ to check different user actions on the client.
 
 > In order to use _TypeScript_ in Cypress we need to install webpack and setup a webpack config in the **Cypress** folder. However when we do this the **create-react-app** build fails to build since there are two webpack dependencies. In order to temporary solve this problem we can create and .env file with the key: `SKIP_PREFLIGHT_CHECK=true`
+
+## Created with
+
+<url>https://github.com/Hoyby<url>
+
+<url>https://github.com/StefanTomic-NTNU<url>
+
+<url>https://github.com/MariusArhaug<url>
+
+
+
+
