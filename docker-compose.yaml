@@ -1,0 +1,53 @@
+version: "3.8"
+
+name: JAMDB
+
+services:
+  
+  database:
+    container_name: mongo-db
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - webapp
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    restart: always
+    environment:
+      - MONGO_URI=mongodb://database:27017/DB
+    ports:
+      - 4000:4000
+    networks:
+      - webapp
+    depends_on:
+      - database
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    environment:
+      - REACT_APP_GRAPHQL_URI=http://backend:4000/graphql
+    ports:
+      - 3000:3000
+    networks:
+      - webapp
+    depends_on:
+      - backend
+
+
+networks:
+  webapp:
+    driver: bridge
+  
+volumes:
+  mongo_data:

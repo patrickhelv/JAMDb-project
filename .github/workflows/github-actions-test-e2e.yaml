@@ -1,0 +1,71 @@
+name: E2E-Tests
+
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["CI-Tests"]
+    types:
+      - completed
+
+
+jobs:
+
+  start_front:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Use Node.js 12 for Frontend
+        uses: actions/setup-node@v4
+        with:
+          node-version: '12.0'
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: yarn --frozen-lockfile
+
+      - name: Start Frontend
+        working-directory: ./frontend
+        run: yarn start &  # Run in background
+
+  start_backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 12 for Backend
+        uses: actions/setup-node@v4
+        with:
+          node-version: '12.0'
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: yarn --frozen-lockfile
+
+      - name: Start Backend
+        working-directory: ./backend
+        run: yarn start &  # Run in background
+
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: [start_backend, start_front]
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Services to be Ready
+        run: sleep 15
+      
+      - name: Run Cypress E2E Tests
+        working-directory: ./frontend
+        run: yarn cypress run --headless
+      

@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FindMovieInput {
+  _id: String!
+}
+
+type MovieDto {
+  _id: String!
+  createdAt: DateTime!
+  description: String!
+  published: Int!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input MovieInput {
+  description: String!
+  published: Int!
+  title: String!
+}
+
+input MoviesPageInput {
+  filterCond: String!
+  filterField: String!
+  filterValue: Float!
+  orderField: String!
+  orderValue: Float!
+  searchQuery: String!
+  skip: Float!
+  take: Float!
+}
+
+type Mutation {
+  createMovie(input: MovieInput!): MovieDto!
+  deleteMovie(input: FindMovieInput!): Boolean!
+  updateMovie(input: UpdateMovieInput!): MovieDto!
+}
+
+type Query {
+  findMovie(input: FindMovieInput!): MovieDto!
+  searchMoviesPage(input: MoviesPageInput!): [MovieDto!]!
+}
+
+input UpdateMovieInput {
+  _id: String!
+  description: String
+  published: Int
+  title: String
+}

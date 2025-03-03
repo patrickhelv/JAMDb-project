@@ -1,0 +1,32 @@
+FROM node:12 AS base
+
+FROM base AS deps
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+
+RUN yarn --frozen-lockfile 
+
+FROM base AS builder
+
+WORKDIR /back
+
+COPY --from=deps /app/node_modules ./node_modules
+
+COPY package.json ./
+COPY tsconfig.build.json tsconfig.json nest-cli.json schema.gql ./
+COPY ./src ./src
+
+RUN yarn build
+
+FROM base AS runner
+
+WORKDIR /app
+
+RUN apt-get install curl
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /back/dist ./dist
+
+CMD ["node", "./dist/main.js"]
