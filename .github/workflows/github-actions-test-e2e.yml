@@ -46,6 +46,9 @@ jobs:
           echo "Waiting for backend to start..."
           sleep 10  # Adjust this as needed
 
+      - name: Set TERM environment variable
+        run: echo "TERM=xterm" >> ~/.bashrc
+
       - name: Run Cypress E2E Tests
         working-directory: ./frontend
-        run: yarn cypress run --headless
+        run: yarn cypress run --headless --browser chrome --disable-gpu
