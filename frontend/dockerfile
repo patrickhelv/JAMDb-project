@@ -1,0 +1,38 @@
+FROM node:12 AS base
+
+FROM base AS deps
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+
+RUN yarn --frozen-lockfile 
+
+FROM base AS builder
+
+WORKDIR /front
+
+COPY --from=deps /app/node_modules ./node_modules
+
+COPY package.json ./
+COPY tailwind.config.js tsconfig.json craco.config.js ./
+COPY ./src ./src
+COPY ./public ./public
+
+RUN yarn build
+
+FROM base as runner
+
+COPY --from=builder /front/build ./build
+COPY --from=builder /front/public ./public
+
+RUN yarn add express
+
+RUN echo "const express = require('express'); \
+const app = express(); \
+app.use(express.static('build')); \
+app.get('*', (req, res) => res.sendFile(__dirname + '/build/index.html')); \
+app.listen(3000, () => console.log('Frontend running on http://localhost:3000'));" \
+> server.js
+
+CMD ["node", "server.js"]

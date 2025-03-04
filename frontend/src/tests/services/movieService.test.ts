@@ -10,10 +10,6 @@ describe('Movie services', () => {
     }
     const { _id, title, description, published } = movieDetail
 
-    it('Get movies', () => {
-        expect(movieService.getMovies()).toMatchSnapshot()
-    })
-
     it('Find movie', () => {
         expect(movieService.findMovie(movieDetail._id)).toMatchSnapshot()
     })

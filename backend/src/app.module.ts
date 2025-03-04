@@ -6,7 +6,9 @@ import { MovieModule } from './movie/movie.module'
 @Module({
     imports: [
         MovieModule,
-        MongooseModule.forRoot(`mongodb://129.241.104.148:27017/DB`),
+        MongooseModule.forRoot(
+            process.env.MONGO_URI || 'mongodb://localhost:27017/DB', // Use Docker ENV or Fallback
+        ),
         GraphQLModule.forRoot({
             installSubscriptionHandlers: true,
             autoSchemaFile: 'schema.gql',
